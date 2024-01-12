@@ -1,5 +1,6 @@
 extends Area2D
 
+signal hit
 
 @export var speed_x: float = 300.0
 @export var speed_y: float = 300.0
@@ -22,6 +23,7 @@ func _ready() -> void:
 	screen_size = get_viewport_rect().size
 
 func _process(delta: float) -> void:
+	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
 	var adjusted_anim_speed: float = (speed_x+speed_y)/2 / 120 #/ Engine.get_frames_per_second()
 	
 	# Set velocity
@@ -54,7 +56,9 @@ func _process(delta: float) -> void:
 		new_heading = "sw"
 	elif velocity.x < 0 and velocity.y < 0:
 		new_heading = "nw"
+	# TODO: Preserve diagonal resting headings with input buffer or similar
 
+	# TODO: Make sure cat starts out full_idle and facing up
 	if new_heading != current_heading:
 		last_heading = current_heading
 	current_heading = new_heading
@@ -91,6 +95,9 @@ func _process(delta: float) -> void:
 	$CollisionPolygon2D.set_polygon(hitbox)
 	
 	position += velocity * delta
+	# TODO: More accurate clamp by including the sprite size, or checking for collison
 	position.x = clamp(position.x, 0, screen_size.x)
 	
-	
+ 
+func _on_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.

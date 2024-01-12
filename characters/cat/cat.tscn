@@ -670,3 +670,5 @@ sprite_frames = SubResource("SpriteFrames_48s4n")
 animation = &"idle_e"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
