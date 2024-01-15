@@ -91,4 +91,3 @@ func _process(delta: float) -> void:
 		velocity = -velocity
 		$CollisionPolygon2D.position.x -= 2*offset.x
 		
-	print(Engine.get_frames_per_second())
