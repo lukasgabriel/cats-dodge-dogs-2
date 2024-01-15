@@ -11,13 +11,10 @@ config_version=5
 [application]
 
 config/name="cats-dodge-dogs-2"
-run/main_scene="res://characters/cat/cat.tscn"
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=120
 config/icon="res://icon.svg"
-
-[autoload]
-
-InputBuffer="*res://util/input_buffer.gd"
 
 [display]
 
@@ -59,5 +56,6 @@ move_s={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

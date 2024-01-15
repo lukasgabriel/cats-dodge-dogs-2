@@ -661,14 +661,17 @@ animations = [{
 }]
 
 [node name="Cat" type="Area2D"]
-position = Vector2(398, 895)
+position = Vector2(397, 910)
 scale = Vector2(5, 5)
 script = ExtResource("1_j8rcg")
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.800003, 0.200012)
 sprite_frames = SubResource("SpriteFrames_48s4n")
 animation = &"walk_n"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-4.8, -12.6, -2.8, -12.6, -1, -9.79999, 1.6, -9.79999, 3.8, -12.8, 4.8, -12.8, 5.8, -11.6, 5.8, -4.59999, 4.6, -4.59999, 4.8, 4.2, 3.8, 4.2, 3.8, 8.2, 2.6, 8.2, 2.6, 9.2, 0.800003, 9.2, 0.800003, 5.2, -0.199997, 5.2, -0.199997, 9.2, -2.2, 9.2, -2.2, 8.2, -3.2, 8.2, -3.2, 4.2, -4.4, 4.2, -4.4, -4.79999, -5.2, -4.79999, -5.2, -12.8)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

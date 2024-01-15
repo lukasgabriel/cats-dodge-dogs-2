@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi30vcfr15mk4"]
+
+[ext_resource type="PackedScene" uid="uid://64dajst61jhe" path="res://characters/cat/cat.tscn" id="1_wbja6"]
+[ext_resource type="PackedScene" uid="uid://bl88ee3k63438" path="res://characters/dog/dog.tscn" id="2_hkhlh"]
+
+[node name="Main" type="Node"]
+
+[node name="Cat" parent="." instance=ExtResource("1_wbja6")]
+
+[node name="Dog" parent="." instance=ExtResource("2_hkhlh")]
+position = Vector2(385, 448)

@@ -2,12 +2,14 @@ extends Area2D
 
 signal hit
 
+
 @export var speed_x: float = 300.0
 @export var speed_y: float = 300.0
+@export var speed_x_cap: float = 600.0
+@export var speed_y_cap: float = 600.0
 @export var starting_health: int = 3
-@export var hitbox_epsilon: int = 5
+@export var hitbox_epsilon: int = 0
 @export var idle_wait: int = 90
-@export var release_threshold: float = 0.2
 
 var screen_size: Vector2
 var last_heading: String = "n"
@@ -18,9 +20,18 @@ var last_release_time: float = 0.0
 var idle_frames: int = 0
 var full_idle: bool = false
 var velocity: Vector2 = Vector2.ZERO
+var hitboxes: Dictionary #<String, Array[CollisionPolygon2D]>
+var offset: Vector2
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
+	
+	# Pregenerate hitboxes and offset CollisionPolygon once
+	hitboxes = HitboxFromSprite.generate_all($AnimatedSprite2D, hitbox_epsilon)
+	offset = Vector2(HitboxFromSprite.get_offset($AnimatedSprite2D))
+	$CollisionPolygon2D.position -= offset
+
 
 func _process(delta: float) -> void:
 	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
@@ -89,15 +100,24 @@ func _process(delta: float) -> void:
 				# Set to last frame of the idle animation
 				$AnimatedSprite2D.frame = $AnimatedSprite2D.sprite_frames.get_frame_count("idle_%s" % last_heading) - 1
 				full_idle = true
-			
-			
-	var hitbox: PackedVector2Array = HitboxFromSprite.generate($AnimatedSprite2D, hitbox_epsilon).get_polygon()
-	$CollisionPolygon2D.set_polygon(hitbox)
 	
+	$CollisionPolygon2D.set_polygon(hitboxes[$AnimatedSprite2D.animation][$AnimatedSprite2D.frame].get_polygon())
+	
+	velocity.x = clamp(velocity.x, -speed_x_cap, speed_x_cap)
+	velocity.y = clamp(velocity.y, -speed_y_cap, speed_y_cap)
 	position += velocity * delta
+	position.x = clamp(position.x, 0 + 1.5*offset.x, screen_size.x - 1.5*offset.x)
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
-	position.x = clamp(position.x, 0, screen_size.x)
-	
- 
+
+
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+
+
 func _on_body_entered(body: Node2D) -> void:
-	pass # Replace with function body.
+	print("Hit!")
+	hit.emit()
+	# Must be deferred as we can't change physics properties on a physics callback.
+	$CollisionShape2D.set_deferred("disabled", true)
