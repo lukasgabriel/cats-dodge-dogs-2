@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cp42cq0oiv3uc"
-path="res://.godot/imported/dog_white.png-7b5f65c25ccdc966ffa116532ecbe122.ctex"
+uid="uid://cvysqir5r1ll"
+path="res://.godot/imported/Sniffing.png-2197483b8336db76fd583fce7fd88d57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/dog/dog_white.png"
-dest_files=["res://.godot/imported/dog_white.png-7b5f65c25ccdc966ffa116532ecbe122.ctex"]
+source_file="res://characters/dog/brown/Sniffing.png"
+dest_files=["res://.godot/imported/Sniffing.png-2197483b8336db76fd583fce7fd88d57.ctex"]
 
 [params]
 

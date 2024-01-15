@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgupjl222nd0o"
-path="res://.godot/imported/dog_exotic.png-0deb22dae6e3a105b542e56c7e926dd3.ctex"
+uid="uid://cvfx12mq8oquk"
+path="res://.godot/imported/Jumping.png-4862aa11fd5e5bea9a1615d3dfc55611.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/dog/dog_exotic.png"
-dest_files=["res://.godot/imported/dog_exotic.png-0deb22dae6e3a105b542e56c7e926dd3.ctex"]
+source_file="res://characters/dog/brown/Jumping.png"
+dest_files=["res://.godot/imported/Jumping.png-4862aa11fd5e5bea9a1615d3dfc55611.ctex"]
 
 [params]
 
