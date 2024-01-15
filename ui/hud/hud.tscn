@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbweov8crqebr"]
+
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="1_wdapb"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_wdapb")
+
+[node name="GameScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="HighScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HeartsContainer" type="FlowContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HeartRect" type="TextureRect" parent="HeartsContainer"]
+layout_mode = 2
+
+[node name="UpArrow" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
