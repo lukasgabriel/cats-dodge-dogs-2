@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://bl88ee3k63438"]
+[gd_scene load_steps=49 format=3 uid="uid://bo2rfcpuivihn"]
 
 [ext_resource type="Script" path="res://characters/dog/dog.gd" id="1_sqwa1"]
 [ext_resource type="Texture2D" uid="uid://c6pwscgk58rie" path="res://characters/dog/brown/Crouched.png" id="2_t47iy"]
@@ -320,20 +320,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Dog" type="RigidBody2D"]
+[node name="Dog" type="Area2D"]
 position = Vector2(398, 334)
-gravity_scale = 0.0
+scale = Vector2(5, 5)
 script = ExtResource("1_sqwa1")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_5j2hx")
 animation = &"walk"
 frame = 6
 frame_progress = 0.0713844
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-scale = Vector2(5, 5)
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

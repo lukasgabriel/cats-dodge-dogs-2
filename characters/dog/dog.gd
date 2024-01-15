@@ -1,4 +1,5 @@
-extends RigidBody2D
+extends Area2D
+
 
 @export var speed_x: float = 300.0
 @export var speed_x_cap: float = 600.0
@@ -21,13 +22,17 @@ var idle_frames: int = 0
 var full_idle: bool = false
 var velocity: float = 1.0
 var hitboxes: Dictionary #<String, Array[CollisionPolygon2D]>
+var offset: Vector2
+
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	
-	# Pregenerate hitboxes and offset CollisionPolygon once
+	# Pregenerate hitboxes
 	hitboxes = HitboxFromSprite.generate_all($AnimatedSprite2D, hitbox_epsilon)
-	$CollisionPolygon2D.position -= Vector2(HitboxFromSprite.get_offset($AnimatedSprite2D))
+	offset = Vector2(HitboxFromSprite.get_offset($AnimatedSprite2D))
+	$CollisionPolygon2D.position -= offset
+
 
 func _process(delta: float) -> void:
 	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
@@ -38,9 +43,11 @@ func _process(delta: float) -> void:
 	if velocity > 0:
 		new_heading = "e"
 		$AnimatedSprite2D.flip_h = false
+		$CollisionPolygon2D.scale.x = 1
 	elif velocity < 0:
 		new_heading = "w"
 		$AnimatedSprite2D.flip_h = true
+		$CollisionPolygon2D.scale.x = -1
 
 	if new_heading != current_heading:
 		last_heading = current_heading
@@ -71,12 +78,17 @@ func _process(delta: float) -> void:
 				# Set to last frame of the idle animation
 				$AnimatedSprite2D.frame = $AnimatedSprite2D.sprite_frames.get_frame_count("idle") - 1
 				full_idle = true
-			
-			
+				
 	$CollisionPolygon2D.set_polygon(hitboxes[$AnimatedSprite2D.animation][$AnimatedSprite2D.frame].get_polygon())
 	
 	position.x += velocity * delta * speed_x
 	
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
-	if position.x >= screen_size.x or position.x <= 0:
+	if position.x >= screen_size.x - 3*offset.x:
 		velocity = -velocity
+		$CollisionPolygon2D.position.x += 2*offset.x
+	if position.x <= 0 + 3*offset.x:
+		velocity = -velocity
+		$CollisionPolygon2D.position.x -= 2*offset.x
+		
+	print(Engine.get_frames_per_second())
