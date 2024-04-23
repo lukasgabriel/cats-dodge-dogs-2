@@ -34,7 +34,7 @@ func _ready() -> void:
 	$CollisionPolygon2D.position -= offset
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
 	var adjusted_anim_speed: float = (speed_x)/2 / 120 #/ Engine.get_frames_per_second()
 	

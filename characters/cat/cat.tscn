@@ -671,4 +671,4 @@ animation = &"walk_n"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered" flags=3]

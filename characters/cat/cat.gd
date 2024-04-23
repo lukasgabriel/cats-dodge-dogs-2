@@ -33,7 +33,7 @@ func _ready() -> void:
 	$CollisionPolygon2D.position -= offset
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
 	var adjusted_anim_speed: float = (speed_x+speed_y)/2 / 120 #/ Engine.get_frames_per_second()
 	
@@ -116,8 +116,6 @@ func start(pos):
 	$CollisionShape2D.disabled = false
 
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_area_entered(area: Area2D) -> void:
 	print("Hit!")
 	hit.emit()
-	# Must be deferred as we can't change physics properties on a physics callback.
-	$CollisionShape2D.set_deferred("disabled", true)
