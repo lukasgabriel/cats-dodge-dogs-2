@@ -110,6 +110,10 @@ func _physics_process(delta: float) -> void:
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
 
 
+func _process(delta: float) -> void:
+	pass
+
+
 func start(pos):
 	position = pos
 	show()
@@ -117,5 +121,6 @@ func start(pos):
 
 
 func _on_area_entered(area: Area2D) -> void:
+	$AnimatedSprite2D.modulate = Color(1, 0, 0)
 	print("Hit!")
 	hit.emit()

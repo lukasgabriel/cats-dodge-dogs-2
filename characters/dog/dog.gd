@@ -35,8 +35,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
-	var adjusted_anim_speed: float = (speed_x)/2 / 120 #/ Engine.get_frames_per_second()
+	var adjusted_anim_speed: float = (speed_x)/2 / 60
 	
 	# Set sprite according to velocity (direction)
 	last_heading = current_heading
@@ -83,11 +82,13 @@ func _physics_process(delta: float) -> void:
 	
 	position.x += velocity * delta * speed_x
 	
-	# TODO: More accurate clamp by including the sprite size, or checking for collison
 	if position.x >= screen_size.x - 3*offset.x:
 		velocity = -velocity
 		$CollisionPolygon2D.position.x += 2*offset.x
 	if position.x <= 0 + 3*offset.x:
 		velocity = -velocity
 		$CollisionPolygon2D.position.x -= 2*offset.x
-		
+
+
+func _process(delta: float) -> void:
+	pass
