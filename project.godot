@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 run/max_fps=120
 config/icon="res://icon.svg"
 
+[autoload]
+
+Logger="*res://addons/godot-logger/logger.gd"
+
 [display]
 
 window/size/viewport_width=800
@@ -28,6 +32,10 @@ window/handheld/orientation=1
 
 movie_writer/movie_file="/Users/lukasgabriel/git/lukasgabriel/cats-dodge-dogs-2/movies/movie.avi"
 movie_writer/fps=120
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-logger/plugin.cfg")
 
 [input]
 
