@@ -664,6 +664,8 @@ animations = [{
 position = Vector2(398, 895)
 scale = Vector2(5, 5)
 script = ExtResource("1_j8rcg")
+speed_x_cap = 1200.0
+speed_y_cap = 1200.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_48s4n")

@@ -17,6 +17,8 @@ var current_heading: String = "n"
 var new_heading: String = "n"
 var last_key_released: String = ""
 var last_release_time: float = 0.0
+var is_sprinting: bool = false
+var is_dashing: bool = false
 var idle_frames: int = 0
 var full_idle: bool = false
 var velocity: Vector2 = Vector2.ZERO
@@ -48,6 +50,9 @@ func _physics_process(delta: float) -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_n"):
 		velocity.y -= 1
+		
+	is_sprinting = true if Input.is_action_pressed("sprint") else false
+	is_dashing = true if Input.is_action_pressed("dash") else false
 
 	# Set sprite according to velocity (direction)
 	last_heading = current_heading
@@ -121,6 +126,5 @@ func start(pos):
 
 
 func _on_area_entered(area: Area2D) -> void:
-	$AnimatedSprite2D.modulate = Color(1, 0, 0)
 	print("Hit!")
 	hit.emit()
