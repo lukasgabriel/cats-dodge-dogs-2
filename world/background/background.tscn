@@ -1,0 +1,62 @@
+[gd_scene load_steps=10 format=3 uid="uid://1t8fqk3hu8fa"]
+
+[ext_resource type="Script" path="res://world/background/background.gd" id="1_8ipsr"]
+[ext_resource type="Texture2D" uid="uid://dx67c18kxg2ob" path="res://world/background/grass.png" id="2_mh1sf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o4y3"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cu10i"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p64ha"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3n486"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l45rj"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2iyqn"]
+atlas = ExtResource("2_mh1sf")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c03f7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o4y3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cu10i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p64ha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3n486")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l45rj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2iyqn")
+}],
+"loop": true,
+"name": &"grassy",
+"speed": 5.0
+}]
+
+[node name="Background" type="Node2D"]
+z_index = -1
+scale = Vector2(4, 4)
+script = ExtResource("1_8ipsr")
+textures = SubResource("SpriteFrames_c03f7")
+bg_type = null
+level_height = null

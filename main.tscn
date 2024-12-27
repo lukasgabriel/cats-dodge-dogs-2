@@ -1,16 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi30vcfr15mk4"]
+[gd_scene load_steps=9 format=3 uid="uid://bi30vcfr15mk4"]
 
 [ext_resource type="PackedScene" uid="uid://dbweov8crqebr" path="res://ui/hud/hud.tscn" id="1_vosyl"]
 [ext_resource type="PackedScene" uid="uid://64dajst61jhe" path="res://characters/cat/cat.tscn" id="1_wbja6"]
 [ext_resource type="PackedScene" uid="uid://bo2rfcpuivihn" path="res://characters/dog/dog.tscn" id="2_hkhlh"]
 [ext_resource type="PackedScene" uid="uid://da3lpfjliis4r" path="res://world/level.tscn" id="2_qi71p"]
-[ext_resource type="TileSet" uid="uid://xr3e8oyk3blu" path="res://world/grassy.tres" id="5_wcp3s"]
+[ext_resource type="Script" path="res://world/level.gd" id="3_bqlkv"]
+[ext_resource type="PackedScene" uid="uid://1t8fqk3hu8fa" path="res://world/background/background.tscn" id="6_ee7yh"]
+[ext_resource type="Shader" uid="uid://bgmyeidbrtf7b" path="res://world/background/classic_perlin2d.tres" id="7_dgcrh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_51jcd"]
+shader = ExtResource("7_dgcrh")
+shader_parameter/offset = null
+shader_parameter/scale = 1.0
 
 [node name="Main" type="Node"]
 
 [node name="HUD" parent="." instance=ExtResource("1_vosyl")]
 
 [node name="Level" parent="." instance=ExtResource("2_qi71p")]
+script = ExtResource("3_bqlkv")
+metadata/_edit_lock_ = true
 
 [node name="Cat" parent="Level" instance=ExtResource("1_wbja6")]
 position = Vector2(400, 900)
@@ -32,7 +41,7 @@ editor_draw_drag_margin = true
 [node name="Dog" parent="Level" instance=ExtResource("2_hkhlh")]
 position = Vector2(385, 448)
 
-[node name="TileMap" type="TileMap" parent="Level"]
-position = Vector2(-1, 0)
-tile_set = ExtResource("5_wcp3s")
-format = 2
+[node name="Background" parent="Level" instance=ExtResource("6_ee7yh")]
+material = SubResource("ShaderMaterial_51jcd")
+bg_type = "grassy"
+level_height = 1
