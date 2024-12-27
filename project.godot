@@ -28,8 +28,6 @@ window/handheld/orientation=1
 
 movie_writer/movie_file="/Users/lukasgabriel/git/lukasgabriel/cats-dodge-dogs-2/movies/movie.avi"
 movie_writer/fps=120
-version_control/plugin_name="GitPlugin"
-version_control/autoload_on_startup=true
 
 [input]
 
