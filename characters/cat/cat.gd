@@ -12,6 +12,7 @@ signal hit
 @export var idle_wait: int = 90
 
 var screen_size: Vector2
+var level_height: int = 2
 var last_heading: String = "n"
 var current_heading: String = "n"
 var new_heading: String = "n"
@@ -28,6 +29,7 @@ var offset: Vector2
 
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
+	level_height = get_parent().level_height
 	
 	# Pregenerate hitboxes and offset CollisionPolygon once
 	hitboxes = HitboxFromSprite.generate_all($AnimatedSprite2D, hitbox_epsilon)
@@ -112,6 +114,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y = clamp(velocity.y, -speed_y_cap, speed_y_cap)
 	position += velocity * delta
 	position.x = clamp(position.x, 0 + 1.5*offset.x, screen_size.x - 1.5*offset.x)
+	position.y = clamp(position.y, -screen_size.y * (level_height - 1), screen_size.y*1.1)
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
 
 

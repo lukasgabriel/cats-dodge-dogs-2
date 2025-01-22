@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var level_height: int = 256
-
+@export_enum("grassy", "snowy", "sandy", "urban") var level_type: String = "grassy"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

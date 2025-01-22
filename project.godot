@@ -24,6 +24,7 @@ Logger="*res://addons/godot-logger/logger.gd"
 
 window/size/viewport_width=800
 window/size/viewport_height=1080
+window/size/resizable=false
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 window/handheld/orientation=1
