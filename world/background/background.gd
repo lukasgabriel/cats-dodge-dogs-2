@@ -6,6 +6,7 @@ extends Node2D
 var level_height: int = 2
 var level_type: String = "grassy"
 
+
 func setup_background():
 	var screen_size = get_viewport_rect().size
 	var bg_base = Node2D.new()
@@ -31,7 +32,6 @@ func setup_background():
 			bg_base.add_child(sprite)
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	level_type = get_parent().level_type
 	level_height = get_parent().level_height
