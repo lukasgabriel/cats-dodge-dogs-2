@@ -1,12 +1,13 @@
 extends Area2D
 
 signal hit
+signal win
 
-
-@export var speed_x: float = 300.0
-@export var speed_y: float = 300.0
+@export var base_speed_x: float = 300.0
+@export var base_speed_y: float = 300.0
 @export var speed_x_cap: float = 600.0
 @export var speed_y_cap: float = 600.0
+@export var sprint_speed_factor: float = 1.5
 @export var starting_health: int = 3
 @export var hitbox_epsilon: int = 0
 @export var idle_wait: int = 90
@@ -18,6 +19,8 @@ var current_heading: String = "n"
 var new_heading: String = "n"
 var last_key_released: String = ""
 var last_release_time: float = 0.0
+var speed_x: float = 0.0
+var speed_y: float = 0.0
 var is_sprinting: bool = false
 var is_dashing: bool = false
 var idle_frames: int = 0
@@ -38,6 +41,16 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	speed_x = base_speed_x
+	speed_y = base_speed_y
+	
+	is_sprinting = true if Input.is_action_pressed("sprint") else false
+	is_dashing = true if Input.is_action_pressed("dash") else false
+	
+	if is_sprinting:
+		speed_x *= sprint_speed_factor
+		speed_y *= sprint_speed_factor
+	
 	# TODO: Better way to regulate animation speed to framerate/player speed/etc.
 	var adjusted_anim_speed: float = (speed_x+speed_y)/2 / 120 #/ Engine.get_frames_per_second()
 	
@@ -52,9 +65,6 @@ func _physics_process(delta: float) -> void:
 		velocity.y += 1
 	if Input.is_action_pressed("move_n"):
 		velocity.y -= 1
-		
-	is_sprinting = true if Input.is_action_pressed("sprint") else false
-	is_dashing = true if Input.is_action_pressed("dash") else false
 
 	# Set sprite according to velocity (direction)
 	last_heading = current_heading
@@ -116,6 +126,10 @@ func _physics_process(delta: float) -> void:
 	position.x = clamp(position.x, 0 + 1.5*offset.x, screen_size.x - 1.5*offset.x)
 	position.y = clamp(position.y, -screen_size.y * (level_height - 1), screen_size.y*1.1)
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
+
+	if position.y <= (-screen_size.y * (level_height - 1)):
+		Logger.info("Win!")
+		win.emit()
 
 
 func _process(delta: float) -> void:
