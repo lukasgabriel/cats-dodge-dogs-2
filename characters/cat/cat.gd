@@ -28,6 +28,8 @@ var full_idle: bool = false
 var velocity: Vector2 = Vector2.ZERO
 var hitboxes: Dictionary #<String, Array[CollisionPolygon2D]>
 var offset: Vector2
+var win_state: bool = false
+var hit_count: int = 0
 
 
 func _ready() -> void:
@@ -128,6 +130,7 @@ func _physics_process(delta: float) -> void:
 	# TODO: More accurate clamp by including the sprite size, or checking for collison
 
 	if position.y <= (-screen_size.y * (level_height - 1)):
+		win_state = true
 		Logger.info("Win!")
 		win.emit()
 
@@ -143,5 +146,6 @@ func start(pos):
 
 
 func _on_area_entered(area: Area2D) -> void:
+	hit_count += 1
 	Logger.info("Hit!")
 	hit.emit()
