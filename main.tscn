@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bi30vcfr15mk4"]
+[gd_scene load_steps=14 format=3 uid="uid://bi30vcfr15mk4"]
 
 [ext_resource type="PackedScene" uid="uid://dbweov8crqebr" path="res://ui/hud/hud.tscn" id="1_vosyl"]
 [ext_resource type="PackedScene" uid="uid://64dajst61jhe" path="res://characters/cat/cat.tscn" id="1_wbja6"]
+[ext_resource type="Script" path="res://ui/hud/onscreen_log.gd" id="2_6v2vi"]
 [ext_resource type="PackedScene" uid="uid://bo2rfcpuivihn" path="res://characters/dog/dog.tscn" id="2_hkhlh"]
 [ext_resource type="PackedScene" uid="uid://da3lpfjliis4r" path="res://world/level.tscn" id="2_qi71p"]
 [ext_resource type="Script" path="res://world/level.gd" id="3_bqlkv"]
@@ -20,6 +21,24 @@ shader_parameter/scale = 1.0
 [node name="Main" type="Node"]
 
 [node name="HUD" parent="." instance=ExtResource("1_vosyl")]
+
+[node name="OnscreenLog" type="CodeEdit" parent="HUD"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -544.0
+offset_bottom = 256.0
+grow_horizontal = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+script = ExtResource("2_6v2vi")
 
 [node name="Level" parent="." instance=ExtResource("2_qi71p")]
 script = ExtResource("3_bqlkv")
