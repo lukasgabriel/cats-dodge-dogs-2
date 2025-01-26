@@ -58,5 +58,3 @@ z_index = -1
 scale = Vector2(4, 4)
 script = ExtResource("1_8ipsr")
 textures = SubResource("SpriteFrames_c03f7")
-bg_type = null
-level_height = null

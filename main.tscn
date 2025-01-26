@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bi30vcfr15mk4"]
+[gd_scene load_steps=17 format=3 uid="uid://bi30vcfr15mk4"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_j0cng"]
 [ext_resource type="PackedScene" uid="uid://dbweov8crqebr" path="res://ui/hud/hud.tscn" id="1_vosyl"]
 [ext_resource type="PackedScene" uid="uid://64dajst61jhe" path="res://characters/cat/cat.tscn" id="1_wbja6"]
 [ext_resource type="Script" path="res://ui/hud/onscreen_log.gd" id="2_6v2vi"]
@@ -8,7 +9,7 @@
 [ext_resource type="Script" path="res://world/level.gd" id="3_bqlkv"]
 [ext_resource type="Script" path="res://characters/cat/camera_2d.gd" id="5_tqtf7"]
 [ext_resource type="PackedScene" uid="uid://1t8fqk3hu8fa" path="res://world/background/background.tscn" id="6_ee7yh"]
-[ext_resource type="Shader" uid="uid://bgmyeidbrtf7b" path="res://world/background/classic_perlin2d.tres" id="7_dgcrh"]
+[ext_resource type="Shader" uid="uid://bgmyeidbrtf7b" path="res://world/background/perlin2d.tres" id="7_dgcrh"]
 [ext_resource type="PackedScene" uid="uid://ct2qpd8bsiyxy" path="res://world/horizon/horizon.tscn" id="9_yx05f"]
 [ext_resource type="Script" path="res://world/horizon/horizon.gd" id="10_464e1"]
 [ext_resource type="Texture2D" uid="uid://5445td60rbqe" path="res://world/horizon/horizon.png" id="11_qoh2r"]
@@ -20,17 +21,25 @@ font_names = PackedStringArray("Courier")
 default_font = SubResource("SystemFont_j1cbw")
 default_font_size = 28
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_51jcd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o32hn"]
 shader = ExtResource("7_dgcrh")
 shader_parameter/offset = null
-shader_parameter/scale = 1.0
+shader_parameter/scale = 0.5
+shader_parameter/opacity = 0.2
+shader_parameter/noise_color = Color(0.476838, 0.233657, 2.40654e-07, 1)
+shader_parameter/use_periodic_noise = true
+shader_parameter/noise_period = Vector2(4, 8)
+shader_parameter/additive_blend = false
 
 [node name="Main" type="Node"]
+script = ExtResource("1_j0cng")
+debug = true
 
 [node name="HUD" parent="." instance=ExtResource("1_vosyl")]
 
 [node name="OnscreenLog" type="CodeEdit" parent="HUD"]
 modulate = Color(1, 0.508874, 0.69724, 1)
+z_index = 99
 anchors_preset = 10
 anchor_right = 1.0
 offset_right = -200.0
@@ -55,9 +64,11 @@ level_height = 2
 metadata/_edit_lock_ = true
 
 [node name="Cat" parent="Level" instance=ExtResource("1_wbja6")]
+z_index = 1
 position = Vector2(400, 900)
 
 [node name="Camera2D" type="Camera2D" parent="Level/Cat"]
+z_index = 1
 position = Vector2(0, -72)
 scale = Vector2(0.2, 0.2)
 position_smoothing_enabled = true
@@ -73,11 +84,13 @@ editor_draw_drag_margin = true
 script = ExtResource("5_tqtf7")
 
 [node name="Dog" parent="Level" instance=ExtResource("2_hkhlh")]
+z_index = 2
 position = Vector2(385, 448)
 
 [node name="Background" parent="Level" instance=ExtResource("6_ee7yh")]
-material = SubResource("ShaderMaterial_51jcd")
+shader_material = SubResource("ShaderMaterial_o32hn")
 
 [node name="Horizon" parent="Level" instance=ExtResource("9_yx05f")]
+z_index = 3
 script = ExtResource("10_464e1")
 texture = ExtResource("11_qoh2r")
