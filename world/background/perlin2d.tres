@@ -1,0 +1,94 @@
+[gd_resource type="Shader" format=3 uid="uid://bgmyeidbrtf7b"]
+
+[resource]
+resource_name = "Perlin 2D"
+code = "shader_type canvas_item;
+
+uniform vec2 offset;
+uniform float scale: hint_range(0.5, 1000.0);
+uniform float opacity: hint_range(0.0, 1.0) = 0.5;
+uniform vec4 noise_color: source_color = vec4(1.0);
+uniform bool use_periodic_noise = true;
+uniform vec2 noise_period = vec2(4.0, 8.0);
+uniform bool additive_blend = false;
+
+varying vec2 world_pos;
+
+// Modified from original by Stefan Gustavson (stefan.gustavson@liu.se)
+// https://github.com/stegu/webgl-noise
+
+vec4 mod289(vec4 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x) {
+    return mod289(((x * 34.0) + 1.0) * x);
+}
+
+vec4 taylorInvSqrt(vec4 r) {
+    return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+vec2 fade(vec2 t) {
+    return t * t * t * (t * (t * 6.0 - 15.0) + 10.0);
+}
+
+void vertex() {
+    world_pos = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
+}
+
+float get_noise(vec2 P, vec2 rep) {
+    vec4 Pi = floor(vec4(P, P)) + vec4(0.0, 0.0, 1.0, 1.0);
+    vec4 Pf = fract(vec4(P, P)) - vec4(0.0, 0.0, 1.0, 1.0);
+    
+    if (use_periodic_noise) {
+        Pi = mod(Pi, vec4(rep, rep));
+    }
+    
+    Pi = mod289(Pi);
+    vec4 ix = Pi.xzxz;
+    vec4 iy = Pi.yyww;
+    vec4 fx = Pf.xzxz;
+    vec4 fy = Pf.yyww;
+
+    vec4 i = permute(permute(ix) + iy);
+
+    vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0;
+    vec4 gy = abs(gx) - 0.5;
+    vec4 tx = floor(gx + 0.5);
+    gx = gx - tx;
+
+    vec2 g00 = vec2(gx.x,gy.x);
+    vec2 g10 = vec2(gx.y,gy.y);
+    vec2 g01 = vec2(gx.z,gy.z);
+    vec2 g11 = vec2(gx.w,gy.w);
+
+    vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
+    g00 *= norm.x;
+    g01 *= norm.y;
+    g10 *= norm.z;
+    g11 *= norm.w;
+
+    float n00 = dot(g00, vec2(fx.x, fy.x));
+    float n10 = dot(g10, vec2(fx.y, fy.y));
+    float n01 = dot(g01, vec2(fx.z, fy.z));
+    float n11 = dot(g11, vec2(fx.w, fy.w));
+
+    vec2 fade_xy = fade(Pf.xy);
+    vec2 n_x = mix(vec2(n00, n01), vec2(n10, n11), fade_xy.x);
+    float n_xy = mix(n_x.x, n_x.y, fade_xy.y);
+    return 2.3 * n_xy;
+}
+
+void fragment() {
+    float n = get_noise((world_pos + offset) * scale * 0.01, noise_period) * 0.5 + 0.5;
+    vec4 texture_color = texture(TEXTURE, UV);
+    vec4 noise_effect = mix(vec4(1.0), noise_color, n);
+    
+    if (additive_blend) {
+        COLOR = mix(texture_color, texture_color + noise_effect, opacity);
+    } else {
+        COLOR = mix(texture_color, texture_color * noise_effect, opacity);
+    }
+}
+"
